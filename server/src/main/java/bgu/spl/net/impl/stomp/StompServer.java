@@ -9,31 +9,17 @@ public class StompServer {
         // TODO: implement this
 
         ConnectionsImp<String> connectim = new ConnectionsImp<>();
+        if(args[1].equals("tpc")){
 
-        Server.threadPerClient(7777,
+            Server.threadPerClient(Integer.decode("7777").intValue(),
              ()-> new StompMessagingProtocolImp(), ()-> new MessageEncoderDecoderImp(), connectim).serve();
 
+        }
+        else if(args[1].equals("reactor")){
+            Reactor<String> server = new Reactor<>(3, Integer.decode(args[0]).intValue(),
+             ()-> new StompMessagingProtocolImp(), ()-> new MessageEncoderDecoderImp(), connectim);
+            server.serve();
 
-        // Reactor<String> server = new Reactor<>(3, 7777,
-        //  ()-> new StompMessagingProtocolImp(), ()-> new MessageEncoderDecoderImp(), connectim);
-        // server.serve();
-
-
-
-
-
-        // ConnectionsImp<String> connectim = new ConnectionsImp<>();
-        // if(args[1].equals("tpc")){
-
-        //     Server.threadPerClient(Integer.decode("7777").intValue(),
-        //      ()-> new StompMessagingProtocolImp(), ()-> new MessageEncoderDecoderImp(), connectim).serve();
-
-        // }
-        // else if(args[1].equals("reactor")){
-        //     Reactor<String> server = new Reactor<>(3, Integer.decode(args[0]).intValue(),
-        //      ()-> new StompMessagingProtocolImp(), ()-> new MessageEncoderDecoderImp(), connectim);
-        //     server.serve();
-
-        // }
+        }
     }
 }
